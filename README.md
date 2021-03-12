@@ -1,3 +1,13 @@
+## Setup for development
+1. Install libs for minify and beautify (globally)
+`npm -g install js-beautify` and `npm i minify -g`
+
+2. Run `npm run beautify` ONLY when doing merge with new version of library
+
+3. Work on `froala_editor.beautiful.js` and when you are done, run `npm run minify`
+
+---
+
 # [Froala Editor V3](https://www.froala.com/wysiwyg-editor)
 
 [![Build Status](https://api.travis-ci.com/froala-labs/froala-editor-js-2.svg?token=RmiyW7AecDyQ8ja7VMDj&branch=master)](https://travis-ci.com/froala-labs/froala-editor-js-2)

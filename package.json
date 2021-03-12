@@ -2,6 +2,10 @@
   "name": "froala-editor",
   "version": "3.2.6-1",
   "description": "The next generation Javascript WYSIWYG HTML rich text editor made by devs for devs. High performance and modern design make it easy to use for developers and loved by users.",
+  "scripts": {
+    "beautify": "js-beautify --file ./js/froala_editor.min.js > ./js/froala_editor.beautiful.js",
+    "minify": "minify ./js/froala_editor.beautiful.js > ./js/froala_editor.min.js"
+  },
   "keywords": [
     "froala",
     "froala-editor",
@@ -49,5 +53,8 @@
         "css/themes/*.min.css"
       ]
     }
-  ]
+  ],
+  "dependencies": {
+    "js-beautify": "^1.13.5"
+  }
 }
