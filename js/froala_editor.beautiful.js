@@ -3296,7 +3296,11 @@
                 }, 0)
             }();
             else if (n !== V.KEYCODE.BACKSPACE || C(e) || e.altKey)
-                if (n !== V.KEYCODE.DELETE || C(e) || e.altKey || e.shiftKey) n === V.KEYCODE.SPACE ? function l(e) {
+                if (n !== V.KEYCODE.DELETE || C(e) || e.altKey || e.shiftKey)
+                
+                n === V.KEYCODE.SPACE
+                // Handle space
+                ? function l(e) {
                     var t = d.selection.element();
                     if (!d.helpers.isMobile() && t && "A" === t.tagName) {
                         e.preventDefault(), e.stopPropagation(), d.selection.isCollapsed() || d.selection.remove();
@@ -3306,14 +3310,18 @@
                             !n.nextSibling && n.parentNode && "A" === n.parentNode.tagName ? (n.parentNode.insertAdjacentHTML("afterend", "&nbsp;".concat(V.MARKERS)), n.parentNode.removeChild(n)) : (r && r.nodeType === Node.TEXT_NODE && 1 === r.textContent.length && 160 === r.textContent.charCodeAt(0) ? r.textContent += " " : n.insertAdjacentHTML("beforebegin", "&nbsp;"), n.outerHTML = V.MARKERS), d.selection.restore()
                         }
                     }
-                }(e) : n === V.KEYCODE.TAB ? function c(e) {
-                    if (0 < d.opts.tabSpaces)
-                        if (d.selection.isCollapsed()) {
-                            d.undo.saveStep(), e.preventDefault(), e.stopPropagation();
-                            for (var t = "", n = 0; n < d.opts.tabSpaces; n++) t += "&nbsp;";
-                            d.html.insert(t), d.placeholder.refresh(), d.undo.saveStep()
-                        } else e.preventDefault(), e.stopPropagation(), e.shiftKey ? d.commands.outdent() : d.commands.indent()
-                }(e) : C(e) || !b(e.which) || d.selection.isCollapsed() || e.ctrlKey || e.altKey || d.selection.remove();
+                }(e)
+                // Handle tab
+                : n === V.KEYCODE.TAB
+                    ? function c(e) {
+                        if (0 < d.opts.tabSpaces)
+                            if (d.selection.isCollapsed()) {
+                                d.undo.saveStep(), e.preventDefault(), e.stopPropagation();
+                                for (var t = "", n = 0; n < d.opts.tabSpaces; n++) t += "&nbsp;";
+                                d.html.insert(t), d.placeholder.refresh(), d.undo.saveStep()
+                            } else e.preventDefault(), e.stopPropagation(), e.shiftKey ? d.commands.outdent() : d.commands.indent()
+                    }(e)
+                    : C(e) || !b(e.which) || d.selection.isCollapsed() || e.ctrlKey || e.altKey || d.selection.remove();
                 else {
                     if (m(t, e)) return e.preventDefault(), void e.stopPropagation();
                     d.placeholder.isVisible() ? (d.opts.keepFormatOnDelete || g(), e.preventDefault(), e.stopPropagation()) : h(e)
@@ -3597,7 +3605,22 @@
                     })).replace(/\t/g, w(N.opts.tabSpaces || 4)), e = N.clean.html(e, N.opts.pasteDeniedTags, N.opts.pasteDeniedAttrs), N.opts.htmlAllowedStyleProps = c, N.opts.htmlAllowComments = !0, e = (e = (e = $(e)).replace(/\r/g, "")).replace(/^ */g, "").replace(/ *$/g, "")
                 } !t || N.wordPaste && n || (0 === (e = e.replace(/^\n*/g, "").replace(/^ /g, "")).indexOf("<colgroup>") && (e = "<table>".concat(e, "</table>")), e = $(e = function y(e) {
                     var t;
-                    e = (e = (e = (e = (e = (e = (e = (e = (e = (e = (e = (e = (e = (e = (e = e.replace(/<p(.*?)class="?'?MsoListParagraph"?'? ([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<ul><li>$3</li></ul>")).replace(/<p(.*?)class="?'?NumberedText"?'? ([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<ol><li>$3</li></ol>")).replace(/<p(.*?)class="?'?MsoListParagraphCxSpFirst"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<ul><li$3>$5</li>")).replace(/<p(.*?)class="?'?NumberedTextCxSpFirst"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<ol><li$3>$5</li>")).replace(/<p(.*?)class="?'?MsoListParagraphCxSpMiddle"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li>")).replace(/<p(.*?)class="?'?NumberedTextCxSpMiddle"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li>")).replace(/<p(.*?)class="?'?MsoListBullet"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li>")).replace(/<p(.*?)class="?'?MsoListParagraphCxSpLast"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li></ul>")).replace(/<p(.*?)class="?'?NumberedTextCxSpLast"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li></ol>")).replace(/<span([^<]*?)style="?'?mso-list:Ignore"?'?([\s\S]*?)>([\s\S]*?)<span/gi, "<span><span")).replace(/<!--\[if !supportLists\]-->([\s\S]*?)<!--\[endif\]-->/gi, "")).replace(/<!\[if !supportLists\]>([\s\S]*?)<!\[endif\]>/gi, "")).replace(/(\n|\r| class=(")?Mso[a-zA-Z0-9]+(")?)/gi, " ")).replace(/<!--[\s\S]*?-->/gi, "")).replace(/<(\/)*(meta|link|span|\\?xml:|st1:|o:|font)(.*?)>/gi, "");
+                    e = (e = (e = (e = (e = (e = (e = (e = (e = (e = (e = (e = (e = (e = (e = e
+                            .replace(/<p(.*?)class="?'?MsoListParagraph"?'? ([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<ul><li>$3</li></ul>"))
+                            .replace(/<p(.*?)class="?'?NumberedText"?'? ([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<ol><li>$3</li></ol>"))
+                            .replace(/<p(.*?)class="?'?MsoListParagraphCxSpFirst"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<ul><li$3>$5</li>"))
+                            .replace(/<p(.*?)class="?'?NumberedTextCxSpFirst"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<ol><li$3>$5</li>"))
+                            .replace(/<p(.*?)class="?'?MsoListParagraphCxSpMiddle"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li>"))
+                            .replace(/<p(.*?)class="?'?NumberedTextCxSpMiddle"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li>"))
+                            .replace(/<p(.*?)class="?'?MsoListBullet"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li>"))
+                            .replace(/<p(.*?)class="?'?MsoListParagraphCxSpLast"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li></ul>"))
+                            .replace(/<p(.*?)class="?'?NumberedTextCxSpLast"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li></ol>"))
+                            .replace(/<span([^<]*?)style="?'?mso-list:Ignore"?'?([\s\S]*?)>([\s\S]*?)<span/gi, "<span><span"))
+                            .replace(/<!--\[if !supportLists\]-->([\s\S]*?)<!--\[endif\]-->/gi, ""))
+                            .replace(/<!\[if !supportLists\]>([\s\S]*?)<!\[endif\]>/gi, ""))
+                            .replace(/(\n|\r| class=(")?Mso[a-zA-Z0-9]+(")?)/gi, " "))
+                            .replace(/<!--[\s\S]*?-->/gi, ""))
+                            .replace(/<(\/)*(meta|link|span|\\?xml:|st1:|o:|font)(.*?)>/gi, "");
                     var n, r = ["style", "script", "applet", "embed", "noframes", "noscript"];
                     for (t = 0; t < r.length; t++) {
                         var o = new RegExp("<".concat(r[t], ".*?").concat(r[t], "(.*?)>"), "gi");
@@ -5596,7 +5619,7 @@
     V.TOOLBAR_BUTTONS_XS.moreMisc = Object.assign({}, V.TOOLBAR_BUTTONS.moreMisc, {
         buttonsVisible: 2
     }),
-    V.POWERED_BY = '<a id="fr-logo" href="https://froala.com/wysiwyg-editor" target="_blank" title="Froala WYSIWYG HTML Editor"><span>Powered by</span><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 822.8 355.33"><defs><style>.fr-logo{fill:#b1b2b7;}</style></defs><title>Froala</title><path class="fr-logo" d="M123.58,78.65A16.16,16.16,0,0,0,111.13,73H16.6C7.6,73,0,80.78,0,89.94V128.3a16.45,16.45,0,0,0,32.9,0V104.14h78.5A15.63,15.63,0,0,0,126.87,91.2,15.14,15.14,0,0,0,123.58,78.65Z"/><path class="fr-logo" d="M103.54,170a16.05,16.05,0,0,0-11.44-4.85H15.79A15.81,15.81,0,0,0,0,180.93v88.69a16.88,16.88,0,0,0,5,11.92,16,16,0,0,0,11.35,4.7h.17a16.45,16.45,0,0,0,16.41-16.6v-73.4H92.2A15.61,15.61,0,0,0,107.89,181,15.1,15.1,0,0,0,103.54,170Z"/><path class="fr-logo" d="M233,144.17c-5.29-6.22-16-7.52-24.14-7.52-16.68,0-28.72,7.71-36.5,23.47v-5.67a16.15,16.15,0,1,0-32.3,0v115.5a16.15,16.15,0,1,0,32.3,0v-38.7c0-19.09,3.5-63.5,35.9-63.5a44.73,44.73,0,0,1,5.95.27h.12c12.79,1.2,20.06-2.73,21.6-11.69C236.76,151.48,235.78,147.39,233,144.17Z"/><path class="fr-logo" d="M371.83,157c-13.93-13.11-32.9-20.33-53.43-20.33S279,143.86,265.12,157c-14.67,13.88-22.42,32.82-22.42,54.77,0,21.68,8,41.28,22.4,55.2,13.92,13.41,32.85,20.8,53.3,20.8s39.44-7.38,53.44-20.79c14.55-13.94,22.56-33.54,22.56-55.21S386.39,170.67,371.83,157Zm-9.73,54.77c0,25.84-18.38,44.6-43.7,44.6s-43.7-18.76-43.7-44.6c0-25.15,18.38-43.4,43.7-43.4S362.1,186.59,362.1,211.74Z"/><path class="fr-logo" d="M552.7,138.14a16.17,16.17,0,0,0-16,16.3v1C526.41,143.85,509,136.64,490,136.64c-19.83,0-38.19,7.24-51.69,20.4C424,171,416.4,190,416.4,212c0,21.61,7.78,41.16,21.9,55,13.56,13.33,31.92,20.67,51.7,20.67,18.83,0,36.29-7.41,46.7-19.37v1.57a16.15,16.15,0,1,0,32.3,0V154.44A16.32,16.32,0,0,0,552.7,138.14Zm-16.3,73.6c0,30.44-22.81,44.3-44,44.3-24.57,0-43.1-19-43.1-44.3s18.13-43.4,43.1-43.4C513.73,168.34,536.4,183.55,536.4,211.74Z"/><path class="fr-logo" d="M623.5,61.94a16.17,16.17,0,0,0-16,16.3v191.7a16.15,16.15,0,1,0,32.3,0V78.24A16.32,16.32,0,0,0,623.5,61.94Z"/><path class="fr-logo" d="M806.5,138.14a16.17,16.17,0,0,0-16,16.3v1c-10.29-11.63-27.74-18.84-46.7-18.84-19.83,0-38.19,7.24-51.69,20.4-14.33,14-21.91,33-21.91,55,0,21.61,7.78,41.16,21.9,55,13.56,13.33,31.92,20.67,51.7,20.67,18.83,0,36.29-7.41,46.7-19.37v1.57a16.15,16.15,0,1,0,32.3,0V154.44A16.32,16.32,0,0,0,806.5,138.14Zm-16.3,73.6c0,30.44-22.81,44.3-44,44.3-24.57,0-43.1-19-43.1-44.3s18.13-43.4,43.1-43.4C767.53,168.34,790.2,183.55,790.2,211.74Z"/></svg></a>',
+    V.POWERED_BY = '',
     V.MODULES.toolbar = function (m) {
         var C, v = m.$,
             t = [];
