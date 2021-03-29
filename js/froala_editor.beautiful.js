@@ -1106,17 +1106,42 @@
             a.format.toggle(t)
         }
 
+        // Indent/outdent
         function r(e) {
-            a.selection.save(), a.html.wrap(!0, !0, !0, !0), a.selection.restore();
-            for (var t = a.selection.blocks(), n = 0; n < t.length; n++)
+            // Stash
+            a.selection.save(),
+            a.html.wrap(!0, !0, !0, !0),
+            a.selection.restore();
+
+            // Iterate through selected blocks
+            for (var t = a.selection.blocks(), n = 0; n < t.length; n++) {
+                // Modify is selected block or its parent are not 'li'
                 if ("LI" !== t[n].tagName || "LI" !== t[n].parentNode.tagName) {
                     var r = s(t[n]);
+
+                    // If parent is 'li' modify r to use parent
                     "LI" != t[n].tagName && "LI" == t[n].parentNode.tagName && (r = s(t[n].parentNode));
-                    var o = "rtl" === a.opts.direction || "rtl" === r.css("direction") ? "margin-right" : "margin-left",
-                        i = a.helpers.getPX(r.css(o));
-                    if (r.width() < 2 * a.opts.indentMargin && 0 < e) continue;
-                    "UL" != t[n].parentNode.tagName && "OL" != t[n].parentNode.tagName && "LI" != t[n].parentNode.tagName && r.css(o, Math.max(i + e * a.opts.indentMargin, 0) || ""), r.removeClass("fr-temp-div")
-                } a.selection.save(), a.html.unwrap(), a.selection.restore()
+
+                    // Define margin based on direction of text editor (left-to-right/right-to-left)
+                    var o = "rtl" === a.opts.direction || "rtl" === r.css("direction") ? "margin-right" : "margin-left";
+
+                    // Get current margin in px
+                    var i = a.helpers.getPX(r.css(o));
+
+                    // Do nothing if called for indent 
+                    if (r.width() < 2 * a.opts.indentMargin && 0 < e){
+                        continue;
+                    }
+
+                    "UL" != t[n].parentNode.tagName && "OL" != t[n].parentNode.tagName && "LI" != t[n].parentNode.tagName && r.css(o, Math.max(i + e * a.opts.indentMargin, 0) || ""),
+                    r.removeClass("fr-temp-div")
+                }
+            }
+            
+            // Stash pop
+            a.selection.save(),
+            a.html.unwrap(),
+            a.selection.restore()
         }
 
         function l(e) {
