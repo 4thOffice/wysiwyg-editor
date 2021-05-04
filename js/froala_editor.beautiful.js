@@ -2982,7 +2982,9 @@
                 O.edit.on(), O.core.injectStyle(O.opts.iframeDefaultStyle + O.opts.iframeStyle), g(), O.opts.useClasses || (O.$el.find("[fr-original-class]").each(function () {
                     this.setAttribute("class", this.getAttribute("fr-original-class")), this.removeAttribute("fr-original-class")
                 }), O.$el.find("[fr-original-style]").each(function () {
-                    this.setAttribute("style", this.getAttribute("fr-original-style")), this.removeAttribute("fr-original-style")
+                    // Only apply fr-original-style, when style is not set.
+                    // Adresses font-size changes, where fr-original-style is only updated the first time font-size is changed.
+                    !this.getAttribute("style") && this.setAttribute("style", this.getAttribute("fr-original-style")), this.removeAttribute("fr-original-style")
                 })), p && O.edit.off(), O.events.trigger("html.set"), O.events.trigger("charCounter.update")
             },
             syncInputs: _,

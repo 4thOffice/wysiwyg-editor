@@ -17,15 +17,19 @@
     }
 }(this, function () {
     /**
-     * @param {string} expected
-     * @return {?}
+     * This function will return the type of the primitive passed to it, with some safeguards for Symbol objects
+     * 
+     * @param {any} primitive
+     * @return {string}
      */
-    function fn(expected) {
-        return (fn = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (expected) {
-            return typeof expected;
-        } : function (obj) {
-            return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-        })(expected);
+    function getTypeOf(primitive) {
+        return (getTypeOf = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (_primitive) {
+            return typeof _primitive;
+        } : function (_primitive) {
+            return _primitive && "function" == typeof Symbol && _primitive.constructor === Symbol && _primitive !== Symbol.prototype ?
+                "symbol" :
+                typeof _primitive;
+        })(primitive);
     }
     /**
      * CREATE FROALA INSTANCE
@@ -1439,7 +1443,7 @@
                     "blob:").replace(/%3A(\d)/gi, ":$1").replace(/webkit-fake-url%3A/gi, "webkit-fake-url:").replace(/%3F/g, "?").replace(/%3D/g, "=").replace(/%26/g, "&").replace(/&amp;/g, "&").replace(/%2C/g, ",").replace(/%3B/g, ";").replace(/%2B/g, "+").replace(/%40/g, "@").replace(/%5B/g, "[").replace(/%5D/g, "]").replace(/%7B/g, "{").replace(/%7D/g, "}");
             },
             isArray: function (obj) {
-                return obj && !Object.prototype.propertyIsEnumerable.call(obj, "length") && "object" === fn(obj) && "number" == typeof obj.length;
+                return obj && !Object.prototype.propertyIsEnumerable.call(obj, "length") && "object" === getTypeOf(obj) && "number" == typeof obj.length;
             },
             RGBToHex: function (r) {
                 /**
@@ -6368,8 +6372,12 @@
                         this.removeAttribute("fr-original-class");
                     });
                     editor.$el.find("[fr-original-style]").each(function () {
-                        this.setAttribute("style", this.getAttribute("fr-original-style"));
-                        this.removeAttribute("fr-original-style");
+                        // Only apply fr-original-style, when style is not set.
+                        // Adresses font-size changes, where fr-original-style is only updated the first time font-size is changed.
+                        if (!this.getAttribute("style")) {
+                            this.setAttribute("style", this.getAttribute("fr-original-style"));
+                            this.removeAttribute("fr-original-style");
+                        }
                     });
                 }
                 if (u) {
@@ -11447,7 +11455,7 @@
                 /** @type {boolean} */
                 cities.showMoreButtons = false;
             } else {
-                if (!("object" !== fn(data) || Array.isArray(data))) {
+                if (!("object" !== getTypeOf(data) || Array.isArray(data))) {
                     /** @type {boolean} */
                     (cities = data).showMoreButtons = true;
                 }
@@ -12256,7 +12264,7 @@
             return self;
         },
         attr: function (name, key) {
-            if ("object" === fn(name)) {
+            if ("object" === getTypeOf(name)) {
                 var key;
                 for (key in name) {
                     if (Object.prototype.hasOwnProperty.call(name, key) && null !== name[key]) {
@@ -12318,7 +12326,7 @@
                 /** @type {number} */
                 var i = 0;
                 for (; i < this.length; i++) {
-                    if ("object" !== fn(this[i]["data-" + name] = n) && "function" != typeof n && this[i].setAttribute) {
+                    if ("object" !== getTypeOf(this[i]["data-" + name] = n) && "function" != typeof n && this[i].setAttribute) {
                         this[i].setAttribute("data-" + name, n);
                     }
                 }
@@ -12660,7 +12668,7 @@
              * @return {?}
              */
             var match = function (obj) {
-                return "object" === ("undefined" == typeof HTMLElement ? "undefined" : fn(HTMLElement)) ? obj instanceof HTMLElement : obj && "object" === fn(obj) && null !== obj && 1 === obj.nodeType && "string" == typeof obj.nodeName;
+                return "object" === ("undefined" == typeof HTMLElement ? "undefined" : getTypeOf(HTMLElement)) ? obj instanceof HTMLElement : obj && "object" === getTypeOf(obj) && null !== obj && 1 === obj.nodeType && "string" == typeof obj.nodeName;
             };
             target = find(target);
             /** @type {number} */
@@ -13299,7 +13307,7 @@
             data.charCounterCount = false;
         }
         /** @type {!Object} */
-        this.opts = Object.assign({}, Object.assign({}, config.DEFAULTS, data, "object" === fn(options) && options));
+        this.opts = Object.assign({}, Object.assign({}, config.DEFAULTS, data, "object" === getTypeOf(options) && options));
         /** @type {string} */
         var p = JSON.stringify(this.opts);
         config.OPTS_MAPPING[p] = config.OPTS_MAPPING[p] || this.id;
