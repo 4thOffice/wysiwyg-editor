@@ -6,6 +6,8 @@
 
 3. Work on `froala_editor.beautiful.js` and when you are done, run `npm run minify`
 
+For easier time decoding variables, use `froala_editor_beautiful_reference.js`. Don't make changes there though, because it is not completely functional code and won't be minified for distribution when you are done.
+
 ---
 
 # [Froala Editor V3](https://www.froala.com/wysiwyg-editor)
