@@ -729,16 +729,32 @@
 
         function c(e) {
             if (void 0 === e && (e = !0), !l.$wp) return !1;
+
             if (l.helpers.isIOS() && l.$win.get(0).focus(), l.core.hasFocus()) return !1;
+
             if (l.selection.isCollapsed() && !l.selection.get().anchorNode) {
                 var t = l.$el.find(l.html.blockTagsQuery()).get(0);
                 t && (i(t).prepend(V.MARKERS), l.selection.restore())
             }
+
             if (!l.core.hasFocus() && e) {
                 var n = l.$win.scrollTop();
-                if (l.browser.msie && l.$box && l.$box.css("position", "fixed"), l.browser.msie && l.$wp && l.$wp.css("overflow", "visible"), l.browser.msie && l.$sc && l.$sc.css("position", "fixed"), l.browser.msie || (p(), l.el.focus(), l.events.trigger("focus"), f()), l.browser.msie && l.$sc && l.$sc.css("position", ""), l.browser.msie && l.$box && l.$box.css("position", ""), l.browser.msie && l.$wp && l.$wp.css("overflow", "auto"), n !== l.$win.scrollTop() && l.$win.scrollTop(n), !l.selection.info(l.el).atStart) return !1
+                if (l.browser.msie && l.$box && l.$box.css("position", "fixed"),
+                    l.browser.msie && l.$wp && l.$wp.css("overflow", "visible"),
+                    l.browser.msie && l.$sc && l.$sc.css("position", "fixed"),
+                    l.browser.msie || (p(), l.el.focus(),
+                    l.events.trigger("focus"),
+                    f()),
+                    l.browser.msie && l.$sc && l.$sc.css("position", ""),
+                    l.browser.msie && l.$box && l.$box.css("position", ""),
+                    l.browser.msie && l.$wp && l.$wp.css("overflow", "auto"),
+                    n !== l.$win.scrollTop() && l.$win.scrollTop(n),
+                    !l.selection.info(l.el).atStart
+                ) return !1
             }
+
             if (!l.core.hasFocus() || 0 < l.$el.find(".fr-marker").length) return !1;
+
             if (l.selection.info(l.el).atStart && l.selection.isCollapsed() && null !== l.html.defaultTag()) {
                 var r = l.markers.insert();
                 if (r && !l.node.blockParent(r)) {
@@ -5563,20 +5579,48 @@
             },
             outdent: function a(e) {
                 if (l.node.hasClass(e.get(0), "fr-no-refresh")) return !1;
+
                 for (var t = l.selection.blocks(), n = 0; n < t.length; n++) {
-                    var r = "rtl" === l.opts.direction || "rtl" === c(t[n]).css("direction") ? "margin-right" : "margin-left",
-                        o = t[0].parentElement;
-                    if ("UL" != o.parentNode.tagName && "OL" != o.parentNode.tagName && "LI" != o.parentNode.tagName) return i(e, !0), !0;
-                    if (t[0].previousSibling && "none" == o.parentNode.style.listStyleType) return i(e, !0), !0;
-                    if ("LI" === t[n].tagName || "LI" === t[n].parentNode.tagName) return i(e, !1), !0;
-                    if (0 < l.helpers.getPX(c(t[n]).css(r))) return i(e, !1), !0
+
+                    // Select margin based on text direction
+                    var r = "rtl" === l.opts.direction || "rtl" === c(t[n]).css("direction")
+                        ? "margin-right"
+                        : "margin-left";
+
+                    var o = t[0].parentElement;
+
+                    if ("P" != o.parentNode.tagName && "DIV" != o.parentNode.tagName && "UL" != o.parentNode.tagName && "OL" != o.parentNode.tagName && "LI" != o.parentNode.tagName) {
+                        // Disable button
+                        return i(e, !0), !0;
+                    }
+
+                    if (t[0].previousSibling && "none" == o.parentNode.style.listStyleType) {
+                        // Disable button
+                        return i(e, !0), !0;
+                    }
+
+                    if ("LI" === t[n].tagName || "LI" === t[n].parentNode.tagName) {
+                        // Enable button
+                        return i(e, !1), !0;
+                    }
+
+                    if (0 < l.helpers.getPX(c(t[n]).css(r))) {
+                        // Enable button
+                        return i(e, !1), !0
+                    }
                 }
+
+                // Disable button
                 i(e, !0)
             },
             indent: function o(e) {
                 if (l.node.hasClass(e.get(0), "fr-no-refresh")) return !1;
+
                 for (var t = l.selection.blocks(), n = 0; n < t.length; n++) {
-                    for (var r = t[n].previousSibling; r && r.nodeType === Node.TEXT_NODE && 0 === r.textContent.length;) r = r.previousSibling;
+                    for (var r = t[n].previousSibling; r && r.nodeType === Node.TEXT_NODE && 0 === r.textContent.length;) {
+                        r = r.previousSibling
+                    }
+
                     if ("LI" !== t[n].tagName || r) return i(e, !1), !0;
                     i(e, !0)
                 }
